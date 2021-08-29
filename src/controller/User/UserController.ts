@@ -11,16 +11,16 @@ import {
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { User } from "src/Dto/Auth/photo.entity";
-import { UserService } from "../../service/Auth.service";
+import { User } from "src/Dto/User/User.entity";
+import { UserService } from "../../service/UserService";
 
-@ApiTags("验证服务")
+@ApiTags("用户相关")
 @Controller()
-export class AuthController {
+export class UserController {
   constructor(private readonly AppUserService: UserService) {}
 
   // C
-  @ApiOperation({ summary: "新增用户" })
+  @ApiOperation({ summary: "用户注册" })
   @Post("create-user")
   async create(@Body() body: User): Promise<any> {
     const value = await this.AppUserService.save(body);
@@ -28,23 +28,23 @@ export class AuthController {
   }
 
   // R
-  @ApiOperation({ summary: "查询用户" })
+  @ApiOperation({ summary: "查询所有用户name,id为可项,不传递参数查所有用户" })
+  @ApiQuery({ name: "name", required: false })
+  @ApiQuery({ name: "id", required: false })
   @Get("query-user")
   async getHello(@Query() query: any): Promise<any> {
-    const value = await this.AppUserService.findAll();
+    console.log(query);
+    
+    const value = await this.AppUserService.findOne(query);
     return value;
   }
 
-  @ApiOperation({ summary: "查询用户下所持有的所有文件" })
+  @ApiOperation({ summary: "查询用户下所持有的所有文件 name,id为可项" })
+  @ApiQuery({ name: "name", required: false })
+  @ApiQuery({ name: "id", required: false })
   @Get("getByIdList")
   getByIdList(@Request() req: any) {
-    return this.AppUserService.findAllList();
-  }
-
-  @ApiOperation({ summary: "测试查询特定用户" })
-  @Get("getUserByName")
-  getUserByName(@Request() req: any) {
-    return this.AppUserService.findOne("Aoda");
+    return this.AppUserService.findAllList(req);
   }
 
   // U

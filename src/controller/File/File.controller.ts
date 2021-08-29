@@ -1,9 +1,11 @@
-import { Delete } from "@nestjs/common";
+import { Delete, UseInterceptors } from "@nestjs/common";
 import { Body, Controller, Get, Post, Put, Request } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { ApiConsumes, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { QueryStructure } from "src/common";
 import { File } from "src/Dto/File/FIle.entity";
 import { FIleService } from "src/service/FIle.service";
+
 
 @Controller("files")
 @ApiTags("文件")
@@ -11,6 +13,7 @@ export class FileController {
   constructor(private readonly fileService: FIleService) {}
 
   // 创建角色
+  
   @ApiOperation({ summary: "创建文件" })
   @Post("createList")
   creaetRoule(@Body() body: File): any {

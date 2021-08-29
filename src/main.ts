@@ -15,7 +15,7 @@ async function bootstrap() {
   app.use(compression()); //开启http网络传输压缩
 
   // swagger配置文件
-  const options = new DocumentBuilder()
+  const options = new DocumentBuilder().addBearerAuth()
     .setTitle("Cats example")
     .setDescription("The cats API description")
     .setVersion("1.0")

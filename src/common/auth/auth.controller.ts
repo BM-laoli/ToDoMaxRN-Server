@@ -11,8 +11,8 @@ import {
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiHeader, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { User } from "src/Dto/Auth/photo.entity";
-import { UserService } from "../../service/Auth.service";
+import { User } from "src/Dto/User/User.entity";
+import { UserService } from "../../service/UserService";
 import { AuthService } from "./auth.service";
 
 @ApiTags("登录验证服务")

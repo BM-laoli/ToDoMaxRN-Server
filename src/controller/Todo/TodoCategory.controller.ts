@@ -1,11 +1,15 @@
 import { Delete, UseGuards } from "@nestjs/common";
 import { Body, Controller, Get, Post, Put, Request } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiBasicAuth, ApiBearerAuth, ApiHeader, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { QueryStructure } from "src/common";
 import { TodoCategory } from "src/Dto/ToDo/TodoCategory.entity";
 import { TodoCategoryService } from "../../service/TodoCategory.service";
-
+// @ApiHeader({
+//   name: 'token',
+//   description: 'Auth token'
+// })
+// @UseGuards(AuthGuard("jwt")) //这里就能直接做数据验证了
 @Controller("todoCat")
 // @UseGuards(AuthGuard('jwt')) 可以给这个controller模块加，也可以给单独的方法加
 @ApiTags("父类")
@@ -27,17 +31,14 @@ export class TodoCategoryController {
   }
 
   // 查询父分类
-  @ApiOperation({ summary: "查询父分类列表" })
+  @ApiOperation({ summary: "查询父分类列表 已经其子类 name,id为可项" })
+  @ApiQuery({ name: "name", required: false })
+  @ApiQuery({ name: "id", required: false })
   @Get("getList")
   getRoleList(@Request() req: any) {
-    return this.todoCategoryService.findAll();
-  }
-
-  // 查询父分类
-  @ApiOperation({ summary: "查询父分类下所有的list" })
-  @Get("getByIdList")
-  getByIdList(@Request() req: any) {
-    return this.todoCategoryService.findAllList();
+    
+    
+    return this.todoCategoryService.findAllDetail(QueryStructure(req));
   }
 
   // 删除父分类,允许批量操作
@@ -48,3 +49,7 @@ export class TodoCategoryController {
     return this.todoCategoryService.delet(QueryStructure(req).id);
   }
 }
+function ApiConsume () {
+  throw new Error( "Function not implemented." );
+}
+

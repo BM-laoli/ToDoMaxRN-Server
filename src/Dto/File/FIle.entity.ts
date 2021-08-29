@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { User } from "../Auth/photo.entity";
+import { User } from "../User/User.entity";
 
 @Entity()
 export class File {

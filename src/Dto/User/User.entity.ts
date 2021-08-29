@@ -8,23 +8,25 @@ export class User {
   @PrimaryGeneratedColumn()
   id?: number;
 
+
+  @ApiPropertyOptional({ description: "姓名", example: "Joney" })
+  @Column()
+  name: string;
+  
   @ApiPropertyOptional({ description: "密码", example: "12345" })
   @Column()
   password: string;
 
   @ApiPropertyOptional({ description: "生日", example: new Date() })
   @Column()
-  birth: Date;
+  birth?: Date;
 
   @ApiPropertyOptional({ description: "性别", example: false })
   @Column()
-  sex: boolean;
+  sex?: boolean;
 
-  @ApiPropertyOptional({ description: "姓名", example: "Joney" })
-  @Column()
-  name: string;
 
   // 外键 不会展示在数据表中、
   @OneToMany((type) => File, (file) => file.user)
-  avert: File[];
+  avert?: File[];
 }

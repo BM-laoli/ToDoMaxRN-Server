@@ -30,12 +30,15 @@ export class TodoCategoryService {
   }
 
   // 查这个分类下所有的todo
-  async findAllList(): Promise<any> {
+  async findAllDetail(req): Promise<any> {
+    const { name, id } = req
+    if( !name && !id ) return await createQueryBuilder("TodoCategory").leftJoinAndSelect("TodoCategory.todoList", "todoList").getMany()
     // 注意名称的问题 TodoCategory
     const user = await createQueryBuilder("TodoCategory")
       .leftJoinAndSelect("TodoCategory.todoList", "todoList")
-      .where("TodoCategory.name = :name", { name: "我的一天" })
+      .where("TodoCategory.name = :name OR TodoCategory.id = :id", { name: name,id:id })
       .getOne();
+      
     return user;
   }
 }

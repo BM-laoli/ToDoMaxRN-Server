@@ -1,10 +1,10 @@
 import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
 import { createQueryBuilder, Repository } from "typeorm";
-import { User } from "src/Dto/Auth/photo.entity";
+import { User } from "src/Dto/User/User.entity";
 import { JwtService } from "@nestjs/jwt";
 import { JwtStrategy } from "./jwt.strategy";
 import { QueryStructure } from "..";
-import { UserService } from "src/service/Auth.service";
+import { UserService } from "src/service/UserService";
 import { jwtConstants } from "./constants";
 
 @Injectable()
@@ -12,6 +12,7 @@ export class AuthService {
   constructor(
     @Inject("USER_REPOSITORY")
     private readonly UserRepository: Repository<User>,
+
     private readonly jwtService: JwtService,
     private readonly JwtStrategy: JwtStrategy,
     private readonly userService: UserService
@@ -25,7 +26,9 @@ export class AuthService {
   // 进行验证发布给用户token
   async login(req: any): Promise<any> {
     // 我们去数据库进行查询数据
-    const payload = await this.userService.findOne("Aoda");
+    console.log(req);
+    
+    const payload = await this.userService.findOne(req.name);
 
     if (!payload) {
       throw new HttpException(

@@ -11,7 +11,7 @@ export class TodoListController {
   constructor(private readonly todoListService: TodoListService) {}
 
   // 创建角色
-  @ApiOperation({ summary: "创建子todo" })
+  @ApiOperation({ summary: "创建子todo，你需要带一个参数在body里，文档没写全：category 这个是父级的id" })
   @Post("createList")
   creaetRoule(@Body() body: TodoList): any {
     return this.todoListService.create(body);

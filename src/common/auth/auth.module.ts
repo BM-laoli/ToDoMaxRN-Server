@@ -7,10 +7,10 @@ import { LocalStrategy } from "./local.strategy";
 import { JwtStrategy } from "./jwt.strategy";
 import { jwtConstants } from "./constants";
 import { Connection } from "typeorm";
-import { User } from "src/Dto/Auth/photo.entity";
-import { photoProviders } from "src/Providers/photo.providers";
+import { User } from "src/Dto/User/User.entity";
+import { UserProviders } from "src/Providers/User.providers";
 import { DatabaseModule } from "src/Modules/database.module";
-import { UserService } from "src/service/Auth.service";
+import { UserService } from "src/service/UserService";
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { UserService } from "src/service/Auth.service";
   ],
   controllers: [AuthController],
   providers: [
-    ...photoProviders,
+    ...UserProviders,
     AuthService,
     LocalStrategy,
     JwtStrategy,

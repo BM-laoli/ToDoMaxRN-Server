@@ -1,7 +1,7 @@
 import { Connection, Repository } from "typeorm";
-import { User } from "../Dto/Auth/photo.entity";
+import { User } from "../Dto/User/User.entity";
 
-export const photoProviders = [
+export const UserProviders = [
   {
     provide: "USER_REPOSITORY",
     useFactory: (connection: Connection) => {
